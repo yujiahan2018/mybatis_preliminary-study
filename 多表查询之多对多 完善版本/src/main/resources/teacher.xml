@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tea">
+
+    <!--==================查询嵌套==================-->
+    <select id="selectBlog" resultMap="s">
+        select * from stu_table where stu_id=#{id}
+    </select>
+    <resultMap type="Student" id="s">
+        <collection property="tea" column="stu_id" javaType="ArrayList" ofType="Teacher" select="stu">
+        </collection>
+    </resultMap>
+
+    <!--where后面的id字段名【而不是参数】与相应实体类名称必须相同【不区分大小写】-->
+    <select id="stu" resultType="Teacher">
+        select * from tea_table where stuid=#{id}
+    </select>
+
+
+</mapper>

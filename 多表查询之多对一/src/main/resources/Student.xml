@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Student1">
+
+<!--
+    <select id="selectBlog" resultMap="T">
+        select stu_table.name,tea_table.tea_name from stu_table,tea_table where stu_table.tid=tea_table.tea_id
+    </select>
+
+    <!-起别名 column映射数据库列名|property映射实体类属性名【均不区分大小写】->
+    <resultMap id="T" type="Student">
+        <id column="stu_id" property="ID"/>
+        <result column="name" property="NAME"/>
+        <result column="sex" property="SEX"/>
+        <association property="teacher" javaType="Teacher">
+            <id column="tea_id" property="ID"/>
+            <result column="tea_name" property="NAME"/>
+        </association>
+    </resultMap>
+    -->
+
+    <select id="selectBlog" parameterType="int" resultMap="T">
+        select * from stu_table
+    </select>
+    <resultMap type="Student" id="T">
+        <association property="teacher" column="tid" javaType="Teacher" select="tea">
+        </association>
+    </resultMap>
+
+    <!--where后面的id字段名【而不是参数】与相应实体类名称必须相同【不区分大小写】-->
+    <select id="tea" resultType="Teacher">
+        select * from tea_table where tea_id=#{id}
+    </select>
+
+</mapper>
